@@ -1,0 +1,29 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Change this to the owner's login email
+    function isOwner() {
+      return request.auth != null && request.auth.token.email == "aishwaryaaishu3980@gmail.com";
+    }
+
+    // Prices and stock: everyone can read, only the owner can change
+    match /settings/{doc} {
+      allow read: if true;
+      allow write: if isOwner();
+    }
+
+    // Enquiries: customers can only add one, only the owner can read or manage them
+    match /enquiries/{id} {
+      allow create: if request.resource.data.keys().hasOnly(
+          ['name','phone','quantity','price','size','total','location','notes','status','createdAt'])
+        && request.resource.data.name is string && request.resource.data.name.size() < 100
+        && request.resource.data.phone is string && request.resource.data.phone.size() < 30
+        && request.resource.data.location is string && request.resource.data.location.size() < 200
+        && request.resource.data.notes is string && request.resource.data.notes.size() < 500
+        && request.resource.data.quantity is number
+        && request.resource.data.status == 'new';
+      allow read, update, delete: if isOwner();
+    }
+  }
+}

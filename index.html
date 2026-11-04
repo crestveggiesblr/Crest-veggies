@@ -1,0 +1,717 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Crest Veggies | Tender Coconut Supplier</title>
+<meta name="description" content="Fresh tender coconuts for retailers, juice shops and wholesale buyers. Ask for a quote on WhatsApp.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Nunito+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --palm:#0f4a32; --deep:#0a2f21; --leaf:#1f7a4d; --mint:#e6f2e4; --sun:#f2c230;
+  --ink:#16291f; --muted:#5a6d60; --bg:#f6faf4; --line:#d9e6d6;
+  --head:"Bricolage Grotesque",Georgia,serif; --body:"Nunito Sans",Arial,sans-serif;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:var(--body);color:var(--ink);background:var(--bg);line-height:1.65;font-size:17px}
+h1,h2,h3{font-family:var(--head);line-height:1.15;color:var(--palm)}
+button{font-family:inherit}
+:focus-visible{outline:3px solid var(--sun);outline-offset:2px}
+
+/* Header */
+header{position:sticky;top:0;z-index:20;background:#fffffff2;backdrop-filter:blur(8px);border-bottom:1px solid var(--line);
+  display:flex;justify-content:space-between;align-items:center;gap:16px;padding:12px 6%}
+.logo{font-family:var(--head);font-weight:800;font-size:23px;color:var(--palm);white-space:nowrap;background:none;border:0;cursor:pointer}
+.logo span{color:var(--leaf)}
+nav{display:flex;gap:4px;overflow-x:auto;scrollbar-width:none}
+nav::-webkit-scrollbar{display:none}
+nav button{border:0;background:none;color:var(--ink);padding:9px 14px;font-size:15px;font-weight:700;cursor:pointer;border-radius:999px;white-space:nowrap;transition:background .2s,color .2s}
+nav button:hover{background:var(--mint)}
+nav button.active{background:var(--palm);color:#fff}
+
+/* Pages */
+.page{display:none;min-height:70vh}
+.page.active{display:block}
+
+/* Buttons */
+.btn{display:inline-block;padding:13px 26px;border:0;border-radius:999px;background:var(--sun);color:var(--deep);font-weight:800;font-size:16px;text-decoration:none;cursor:pointer;transition:transform .15s,box-shadow .15s}
+.btn:hover{transform:translateY(-2px);box-shadow:0 6px 16px #0a2f2128}
+.btn-green{background:var(--palm);color:#fff}
+.btn-outline{background:transparent;color:#fff;border:2px solid #ffffff99;margin-left:8px}
+.btn-wa{background:#1fa855;color:#fff}
+
+/* Hero */
+.hero{position:relative;min-height:640px;padding:80px 7%;display:flex;align-items:center;color:#fff;
+  background:linear-gradient(110deg,#0a2f21 0%,#0f4a32 60%,#1f7a4d 100%);gap:40px}
+.hero-content{max-width:680px;animation:rise .7s ease both paused}
+body.ready .hero-content{animation-play-state:running}
+.hero h1{color:#fff;font-size:clamp(40px,6.4vw,76px);font-weight:800;letter-spacing:-.02em;margin-bottom:20px}
+.hero p{font-size:19px;max-width:540px;margin-bottom:30px;color:#e8f3e6}
+.chips{display:flex;flex-wrap:wrap;gap:10px;margin-top:34px}
+.chips span{background:#ffffff1f;border:1px solid #ffffff40;padding:6px 14px;border-radius:999px;font-size:14px;font-weight:600}
+@keyframes rise{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
+
+.hero-art{flex:0 0 min(42%,440px);aspect-ratio:5/4;border-radius:28px;box-shadow:0 20px 50px #0006;margin-left:auto}
+
+/* Product list */
+.shop{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:24px}
+.item{background:#fff;border:1px solid var(--line);border-radius:22px;overflow:hidden;display:flex;flex-direction:column}
+.item-art{height:250px;background:#f3efe8;display:grid;place-items:center;font-size:64px;overflow:hidden}
+.item-art img{width:100%;height:100%;object-fit:cover;display:block}
+.shop-empty{grid-column:1/-1;text-align:center;color:var(--muted)}
+.item-body{padding:22px;display:flex;flex-direction:column;gap:6px;flex:1}
+.item-body h2{font-size:22px}
+.item-body p{color:var(--muted);font-size:15px}
+.item-body .price{font-size:28px;margin:8px 0 0}
+.item-body .btn{margin-top:auto;align-self:flex-start}
+.shop-note{text-align:center;margin-top:28px}
+
+.photo{background:url("coconut.jpg") center/cover no-repeat}
+
+/* Intro splash */
+body.intro-on{overflow:hidden}
+#intro{position:fixed;inset:0;z-index:100;display:none;overflow:hidden;background:radial-gradient(circle at 50% 40%,#1f7a4d 0%,#0f4a32 55%,#0a2f21 100%);cursor:pointer}
+body.intro-on #intro{display:block}
+#introStage{position:absolute;left:50%;top:42%;width:min(320px,68vw);aspect-ratio:1;transform:translate(-50%,-50%);will-change:transform}
+.tile{position:absolute;background-image:url("coconut.jpg");will-change:transform,opacity;opacity:0}
+#introTitle{position:absolute;left:0;right:0;display:flex;justify-content:center;flex-wrap:wrap;font-family:var(--head);font-weight:800;font-size:clamp(34px,8vw,60px);line-height:1.1;color:#fff;letter-spacing:-.01em}
+#introTitle span{display:inline-block;opacity:0;will-change:transform,opacity}
+#introTitle .v{color:var(--sun)}
+#intro small{position:absolute;left:0;right:0;bottom:22px;text-align:center;color:#cfe5d2;font-size:14px;letter-spacing:.04em}
+
+.btn:disabled{opacity:.55;cursor:not-allowed;transform:none;box-shadow:none}
+/* Layout */
+.container{max-width:1120px;margin:auto;padding:72px 24px}
+.page-heading{background:var(--palm);color:#fff;padding:60px 24px;text-align:center}
+.page-heading h1{color:#fff;font-size:clamp(32px,5vw,50px)}
+.page-heading p{max-width:600px;margin:12px auto 0;color:#cfe5d2}
+.section-title{text-align:center;font-size:clamp(28px,4vw,40px);margin-bottom:10px}
+.section-intro{text-align:center;max-width:620px;margin:0 auto 40px;color:var(--muted)}
+
+/* Click-to-open items */
+.accordion{max-width:760px;margin:auto}
+details{background:#fff;border:1px solid var(--line);border-radius:16px;margin-bottom:12px;overflow:hidden}
+details[open]{border-color:var(--leaf)}
+summary{list-style:none;cursor:pointer;padding:18px 22px;font-family:var(--head);font-weight:800;font-size:20px;color:var(--palm);display:flex;justify-content:space-between;align-items:center}
+summary::-webkit-details-marker{display:none}
+summary::after{content:"+";font-size:26px;color:var(--leaf);transition:transform .2s}
+details[open] summary::after{transform:rotate(45deg)}
+details p{padding:0 22px 20px;color:var(--muted)}
+
+/* About */
+.about-layout{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center}
+.about-img{width:100%;height:440px;border-radius:24px}
+.about-copy h2{font-size:clamp(28px,3.4vw,38px);margin-bottom:16px}
+.about-copy p{margin-bottom:14px;color:#33463a}
+.tick-list{list-style:none;margin:22px 0 28px}
+.tick-list li{margin:10px 0;padding-left:30px;position:relative;font-weight:600}
+.tick-list li::before{content:"✓";position:absolute;left:0;top:2px;width:21px;height:21px;border-radius:50%;background:var(--mint);color:var(--leaf);font-size:13px;display:grid;place-items:center}
+
+/* Price */
+.price{font-family:var(--head);font-size:32px;font-weight:800;color:var(--leaf);margin:16px 0 6px}
+.note{color:var(--muted);font-size:14px}
+
+/* Form */
+.quote-box{max-width:660px;margin:auto;padding:36px;background:#fff;border:1px solid var(--line);border-radius:24px}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+label{display:block;font-weight:700;font-size:15px;margin:16px 0 6px}
+input,select,textarea{width:100%;padding:13px 14px;border:1.5px solid #c8d8c6;border-radius:12px;background:#fbfdfa;font:inherit;transition:border-color .2s,box-shadow .2s}
+input:focus,select:focus,textarea:focus{outline:0;border-color:var(--leaf);box-shadow:0 0 0 4px #1f7a4d26}
+.estimate{background:var(--mint);padding:20px 22px;border-radius:16px;margin:24px 0}
+.estimate strong{display:block;font-family:var(--head);color:var(--palm);font-size:36px;line-height:1.2}
+.error{color:#b3261e;font-weight:700;margin-bottom:12px;min-height:1.4em}
+.quote-box .btn{width:100%}
+
+/* Clients */
+.clients-panel{max-width:1000px;margin:auto;padding:46px 30px;text-align:center;background:var(--mint);border-radius:24px}
+.clients-panel h2{font-size:32px;margin-bottom:10px}
+.clients-panel > p{color:var(--muted)}
+.client-list{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:18px;list-style:none;margin:30px auto 0;text-align:left}
+.client-list .empty{grid-column:1/-1;text-align:center;color:var(--muted)}
+.client-card{background:#fff;border:1px solid var(--line);border-radius:20px;padding:22px;display:flex;flex-direction:column;gap:10px}
+.client-top{display:flex;align-items:center;gap:14px}
+.client-logo{flex:0 0 56px;width:56px;height:56px;border-radius:14px;background:var(--mint);display:grid;place-items:center;font-family:var(--head);font-weight:800;font-size:24px;color:var(--palm);overflow:hidden}
+.client-logo img{width:100%;height:100%;object-fit:contain;background:#fff;display:block}
+.client-card h3{font-size:18px}
+.client-card .where{display:block;font-size:13px;color:var(--muted);font-weight:600}
+.client-card blockquote{color:#33463a;font-size:15px;line-height:1.55;position:relative;padding-left:14px;border-left:3px solid var(--sun)}
+.client-card .by{font-size:13px;color:var(--muted);font-weight:700;padding-left:17px}
+
+.fb-wrap{max-width:1000px;margin:56px auto 0}
+.fb-wrap .client-list{margin-top:24px}
+.fb-stars{color:#e0a800;letter-spacing:2px;font-size:17px}
+.fb-form{margin-top:56px}
+.fb-form h2{font-size:28px;margin-bottom:6px}
+.fb-ok{color:var(--leaf);font-weight:700;margin-bottom:12px;min-height:1.4em}
+.fb-form textarea{width:100%;padding:13px 14px;border:1.5px solid #c8d8c6;border-radius:12px;background:#fbfdfa;font:inherit;resize:vertical}
+.fb-form textarea:focus{outline:0;border-color:var(--leaf);box-shadow:0 0 0 4px #1f7a4d26}
+
+/* Footer */
+footer{background:var(--deep);color:#d6e9d8;padding:36px 6%;text-align:center;font-size:15px}
+footer p{margin:4px 0}
+footer strong{font-family:var(--head);font-size:20px;color:#fff}
+footer button{background:none;border:0;color:var(--sun);cursor:pointer;text-decoration:underline;font:inherit}
+
+@media(max-width:820px){
+  header{padding:10px 14px;flex-direction:column;gap:6px}
+  .hero{min-height:560px;padding:56px 6%}
+  .about-layout{grid-template-columns:1fr}
+  .about-img{height:300px}
+  .hero{flex-direction:column;align-items:flex-start;gap:32px}
+  .hero-art{flex:none;width:100%;margin:0;order:-1;aspect-ratio:16/10}
+  .hero{padding-top:32px}
+  .container{padding:48px 18px}
+  .row{grid-template-columns:1fr}
+  .quote-box{padding:24px}
+  .btn-outline{margin:12px 0 0}
+}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
+</style>
+</head>
+<body class="intro-on">
+
+<div id="intro" aria-hidden="true"><div id="introStage"></div><div id="introTitle"></div><small>Tap to skip</small></div>
+
+<header>
+  <button class="logo" data-go="home" aria-label="Crest Veggies home">🌴 Crest <span>Veggies</span></button>
+  <nav aria-label="Main navigation">
+    <button class="active" data-page="home">Home</button>
+    <button data-page="about">About Us</button>
+    <button data-page="products">Products</button>
+    <button data-page="wholesale">Wholesale</button>
+    <button data-page="clients">Our Clients</button>
+  </nav>
+</header>
+
+<main>
+
+  <section class="page active" id="home">
+    <div class="hero">
+      <div class="hero-content">
+        <h1>Fresh tender coconuts, delivered in bulk.</h1>
+        <p>Crest Veggies supplies tender coconuts to retailers, juice shops, businesses and wholesale buyers. Tell us what you need and get a quote.</p>
+        <button class="btn" data-go="wholesale">Get a Wholesale Quote</button>
+        <div class="chips"><span>Retail &amp; wholesale</span><span>Quote on WhatsApp</span><span>Price confirmed before you order</span></div>
+      </div>
+      <div class="hero-art photo" role="img" aria-label="Fresh coconuts, whole and cut open"></div>
+    </div>
+
+    <div class="container">
+      <h2 class="section-title">Why choose Crest Veggies?</h2>
+      <p class="section-intro">Tap an item to read more.</p>
+
+      <div class="accordion">
+        <details name="more"><summary>🌴 Tender coconuts</summary><p>Our website focuses on tender coconuts for refreshing coconut water.</p></details>
+        <details name="more"><summary>📦 Bulk enquiries</summary><p>Tell us the quantity you need and ask for a current quotation.</p></details>
+        <details name="more"><summary>💬 Easy ordering</summary><p>Send your order enquiry directly through WhatsApp.</p></details>
+        <details name="more"><summary>How ordering works</summary><p>1. Send your enquiry with quantity and delivery location. 2. We confirm current price and availability. 3. Agree the delivery details with us.</p></details>
+      </div>
+
+    </div>
+  </section>
+
+  <section class="page" id="about">
+    <div class="page-heading">
+      <h1>About Crest Veggies</h1>
+      <p>Our focus is tender coconuts and customer-friendly supply enquiries.</p>
+    </div>
+    <div class="container">
+      <div class="about-layout">
+        <div class="photo about-img" role="img" aria-label="Fresh coconuts, whole and cut open"></div>
+        <div class="about-copy">
+          <h2>Natural refreshment, simple ordering</h2>
+          <p>Crest Veggies is focused on tender coconut supply for individuals, retailers, juice centres and wholesale customers.</p>
+          <p>We make it easy to ask about availability, order quantities, pricing and delivery requirements.</p>
+          <ul class="tick-list">
+            <li>Tender coconut enquiries</li>
+            <li>Wholesale quantity requests</li>
+            <li>Direct WhatsApp communication</li>
+            <li>Pricing confirmation before ordering</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="page" id="products">
+    <div class="page-heading">
+      <h1>Our Products</h1>
+      <p>Choose a size and price. Fresh tender coconuts for retail and wholesale.</p>
+    </div>
+    <div class="container">
+      <div class="shop" id="shop"><p class="shop-empty">Loading products…</p></div>
+      <p class="note shop-note">*Example prices only. Confirm actual price, availability and delivery costs before ordering.</p>
+    </div>
+  </section>
+
+  <section class="page" id="wholesale">
+    <div class="page-heading">
+      <h1>Wholesale Enquiry</h1>
+      <p>Calculate an indicative order total and send your requirements.</p>
+    </div>
+    <div class="container">
+      <div class="quote-box">
+        <form id="quoteForm" novalidate>
+          <div class="row">
+            <div>
+              <label for="customerName">Your name *</label>
+              <input id="customerName" type="text" placeholder="Enter your name" autocomplete="name" required>
+            </div>
+            <div>
+              <label for="customerPhone">Phone number *</label>
+              <input id="customerPhone" type="tel" placeholder="Enter your phone number" autocomplete="tel" required>
+            </div>
+          </div>
+          <div class="row">
+            <div>
+              <label for="quantity">Quantity (pieces) *</label>
+              <input id="quantity" type="number" min="1" value="100" inputmode="numeric" required>
+            </div>
+            <div>
+              <label for="price">Estimated price per coconut *</label>
+              <select id="price">
+                <option value="15" data-size="Small">₹15 per piece (Small)</option>
+                <option value="20" data-size="Medium" selected>₹20 per piece (Medium)</option>
+                <option value="25" data-size="Large">₹25 per piece (Large)</option>
+              </select>
+            </div>
+          </div>
+          <label for="location">Delivery location *</label>
+          <input id="location" type="text" placeholder="Enter town or area" required>
+          <label for="notes">Additional requirements</label>
+          <textarea id="notes" rows="3" placeholder="Anything else we should know?"></textarea>
+
+          <div class="estimate" aria-live="polite">
+            <p>Indicative estimated total</p>
+            <strong id="total">₹2,000</strong>
+            <p class="note">Final pricing and delivery charges must be confirmed by Crest Veggies.</p>
+          </div>
+
+          <p class="error" id="formError" role="alert"></p>
+          <button type="submit" class="btn btn-wa">Send Enquiry on WhatsApp</button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <section class="page" id="clients">
+    <div class="page-heading">
+      <h1>Our Clients</h1>
+      <p>Shops, juice centres and businesses that buy tender coconuts from Crest Veggies.</p>
+    </div>
+    <div class="container">
+      <div class="clients-panel">
+        <h2>Trusted by local businesses</h2>
+        <p>Businesses that buy tender coconuts from us.</p>
+        <ul class="client-list" id="clientList"><li class="empty">Client list coming soon</li></ul>
+      </div>
+
+      <div class="fb-wrap" id="fbWrap" hidden>
+        <h2 class="section-title">What our clients say</h2>
+        <ul class="client-list" id="fbList"></ul>
+      </div>
+
+      <div class="quote-box fb-form">
+        <h2>Are you a Crest Veggies client?</h2>
+        <p class="note">Share your experience with us. Your feedback will be shown on this page after we approve it.</p>
+        <form id="fbForm" novalidate>
+          <div class="row">
+            <div><label for="fbCompany">Company name *</label><input id="fbCompany" type="text" maxlength="80" autocomplete="organization"></div>
+            <div><label for="fbPerson">Your name *</label><input id="fbPerson" type="text" maxlength="80" autocomplete="name"></div>
+          </div>
+          <div class="row">
+            <div><label for="fbType">Type / place</label><input id="fbType" type="text" maxlength="80" placeholder="e.g. Juice Centre, Bengaluru"></div>
+            <div><label for="fbRating">Rating</label>
+              <select id="fbRating">
+                <option value="5">★★★★★ Excellent</option>
+                <option value="4">★★★★☆ Good</option>
+                <option value="3">★★★☆☆ Average</option>
+                <option value="2">★★☆☆☆ Poor</option>
+                <option value="1">★☆☆☆☆ Very poor</option>
+              </select>
+            </div>
+          </div>
+          <label for="fbText">Your feedback *</label>
+          <textarea id="fbText" rows="4" maxlength="400" placeholder="How has your experience with Crest Veggies been?"></textarea>
+          <input id="fbWebsite" type="text" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;opacity:0">
+          <p class="error" id="fbMsg" role="alert"></p>
+          <button type="submit" class="btn btn-green" id="fbBtn">Send feedback</button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <p><strong>Crest Veggies</strong></p>
+  <p>Fresh Tender Coconuts | Wholesale Enquiries</p>
+  <p>© <span id="year"></span> Crest Veggies. All rights reserved.</p>
+  <p><button data-go="home">Back to Home</button></p>
+</footer>
+
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+<script src="firebase-config.js"></script>
+<script>
+const pages = document.querySelectorAll(".page");
+const navButtons = document.querySelectorAll("nav button[data-page]");
+
+function showPage(id){
+  if(!document.getElementById(id)?.classList.contains("page")) id = "home";
+  pages.forEach(p => p.classList.toggle("active", p.id === id));
+  navButtons.forEach(b => {
+    const on = b.dataset.page === id;
+    b.classList.toggle("active", on);
+    on ? b.setAttribute("aria-current","page") : b.removeAttribute("aria-current");
+    if(on) b.scrollIntoView({inline:"nearest",block:"nearest"});
+  });
+  window.scrollTo({top:0,behavior:"auto"});
+  // Clear the old feedback message when the page changes, so it is fresh when you come back
+  const fbMsgEl = document.getElementById("fbMsg");
+  if(fbMsgEl){ fbMsgEl.textContent = ""; fbMsgEl.className = "error"; }
+}
+
+function navigateTo(id){
+  if(location.hash !== "#" + id) history.pushState({page:id},"","#" + id);
+  showPage(id);
+}
+
+document.querySelectorAll("[data-page],[data-go]").forEach(el =>
+  el.addEventListener("click", () => navigateTo(el.dataset.page || el.dataset.go)));
+window.addEventListener("popstate", () => showPage(location.hash.slice(1) || "home"));
+
+// Wholesale estimate
+const qty = document.getElementById("quantity");
+const priceSel = document.getElementById("price");
+const totalEl = document.getElementById("total");
+function updateTotal(){
+  const t = Math.max(0, Number(qty.value) || 0) * (Number(priceSel.value) || 0);
+  totalEl.textContent = t.toLocaleString("en-IN",{style:"currency",currency:"INR",maximumFractionDigits:0});
+}
+qty.addEventListener("input", updateTotal);
+priceSel.addEventListener("change", updateTotal);
+
+document.getElementById("quoteForm").addEventListener("submit", e => {
+  e.preventDefault();
+  const err = document.getElementById("formError");
+  const name = document.getElementById("customerName").value.trim();
+  const phone = document.getElementById("customerPhone").value.trim();
+  const place = document.getElementById("location").value.trim();
+  const notes = document.getElementById("notes").value.trim();
+  const q = Number(qty.value), price = Number(priceSel.value);
+
+  if(!name || !phone || !place || !Number.isFinite(q) || q < 1){
+    err.textContent = "Please fill in your name, phone number, quantity and delivery location.";
+    return;
+  }
+  err.textContent = "";
+
+  const msg =
+    "Hello Crest Veggies! I would like to enquire about tender coconuts.\n\n" +
+    "Name: " + name + "\nPhone: " + phone + "\n" +
+    "Quantity: " + q + " pieces\n" +
+    "Size: " + (priceSel.selectedOptions[0].dataset.size || "-") + "\n" +
+    "Estimated price per piece: ₹" + price + "\n" +
+    "Estimated total: ₹" + (q * price).toLocaleString("en-IN") + "\n" +
+    "Delivery location: " + place + "\n" +
+    "Additional requirements: " + (notes || "None") + "\n\n" +
+    "Please confirm availability and final pricing.";
+
+  window.open("https://wa.me/918884647050?text=" + encodeURIComponent(msg), "_blank");
+  if(db){
+    db.collection("enquiries").add({
+      name:name, phone:phone, quantity:q, price:price,
+      size:(priceSel.selectedOptions[0].dataset.size || ""),
+      total:q*price, location:place, notes:notes, status:"new",
+      createdAt:firebase.firestore.FieldValue.serverTimestamp()
+    }).catch(()=>{});
+  }
+});
+
+// ---------- Products and clients (managed from the owner panel) ----------
+let db = null;
+const DEFAULT_PRODUCTS = [
+  {id:"d_small",  key:"small",  name:"Small Tender Coconut",  description:"Compact size, good for a single serving.", price:15, inStock:true, image:"small.jpg"},
+  {id:"d_medium", key:"medium", name:"Medium Tender Coconut", description:"Our everyday size for homes, shops and juice centres.", price:20, inStock:true, image:"medium.jpg"},
+  {id:"d_large",  key:"large",  name:"Large Tender Coconut",  description:"Extra coconut water, popular with retailers and bulk buyers.", price:25, inStock:true, image:"large.jpg"}
+];
+let liveProducts = null;   // products from Firestore (null = not loaded / none added yet)
+let legacySettings = {};   // old price/stock overrides for the 3 default products
+
+function mk(tag, cls, text){
+  const e = document.createElement(tag);
+  if(cls) e.className = cls;
+  if(text !== undefined) e.textContent = text;
+  return e;
+}
+
+function currentProducts(){
+  if(liveProducts && liveProducts.length) return liveProducts;
+  return DEFAULT_PRODUCTS.map(p => {
+    const o = legacySettings[p.key];
+    if(!o) return p;
+    const price = Number(o.price);
+    return Object.assign({}, p, {price: Number.isFinite(price) && price > 0 ? price : p.price, inStock: o.inStock !== false});
+  });
+}
+
+function renderProducts(){
+  const list = currentProducts();
+  const shop = document.getElementById("shop");
+  const prevId = priceSel.selectedOptions[0] ? priceSel.selectedOptions[0].dataset.id : "";
+  shop.innerHTML = "";
+  priceSel.innerHTML = "";
+
+  list.forEach(p => {
+    const card = mk("article", "item");
+    const art = mk("div", "item-art");
+    art.setAttribute("role", "img");
+    art.setAttribute("aria-label", p.name);
+    if(p.image){
+      const img = mk("img"); img.src = p.image; img.alt = ""; img.loading = "lazy";
+      img.onerror = () => { art.textContent = "🥥"; img.remove(); };
+      art.appendChild(img);
+    } else art.textContent = "🥥";
+    card.appendChild(art);
+
+    const body = mk("div", "item-body");
+    body.appendChild(mk("h2", "", p.name));
+    if(p.description) body.appendChild(mk("p", "", p.description));
+    const pr = mk("div", "price", "₹" + p.price + " ");
+    pr.appendChild(mk("span", "note", "per piece*"));
+    body.appendChild(pr);
+    const btn = mk("button", "btn btn-green", p.inStock ? "Enquire" : "Out of stock");
+    btn.disabled = !p.inStock;
+    btn.addEventListener("click", () => {
+      const opt = Array.from(priceSel.options).find(o => o.dataset.id === p.id);
+      if(opt) priceSel.value = opt.value, opt.selected = true;
+      updateTotal();
+      navigateTo("wholesale");
+    });
+    body.appendChild(btn);
+    card.appendChild(body);
+    shop.appendChild(card);
+
+    if(p.inStock){
+      const o = document.createElement("option");
+      o.value = p.price; o.dataset.size = p.name; o.dataset.id = p.id;
+      o.textContent = "₹" + p.price + " per piece (" + p.name + ")";
+      if(p.id === prevId) o.selected = true;
+      priceSel.appendChild(o);
+    }
+  });
+
+  if(!list.length) shop.appendChild(mk("p", "shop-empty", "Products coming soon."));
+  if(!priceSel.options.length){
+    const o = document.createElement("option");
+    o.value = 0; o.textContent = "Please ask us for current stock";
+    priceSel.appendChild(o);
+  }
+  updateTotal();
+}
+
+function renderClients(list){
+  const ul = document.getElementById("clientList");
+  ul.innerHTML = "";
+  if(!list.length){ ul.appendChild(mk("li", "empty", "Client list coming soon")); return; }
+  list.forEach(c => {
+    const li = mk("li", "client-card");
+    const top = mk("div", "client-top");
+    const logo = mk("div", "client-logo");
+    const initial = () => { logo.textContent = (c.name || "?").charAt(0).toUpperCase(); };
+    if(c.logo){
+      const img = mk("img"); img.src = c.logo; img.alt = c.name + " logo"; img.loading = "lazy";
+      img.onerror = () => { img.remove(); initial(); };
+      logo.appendChild(img);
+    } else initial();
+    top.appendChild(logo);
+    const who = mk("div");
+    who.appendChild(mk("h3", "", c.name));
+    if(c.type) who.appendChild(mk("span", "where", c.type));
+    top.appendChild(who);
+    li.appendChild(top);
+    ul.appendChild(li);
+  });
+}
+
+function stars(n){ n = Math.max(0, Math.min(5, Number(n) || 0)); return "\u2605".repeat(n) + "\u2606".repeat(5 - n); }
+
+let fbData = [], clientLogos = {};
+function renderFeedback(){
+  const list = fbData;
+  const ul = document.getElementById("fbList");
+  const wrap = document.getElementById("fbWrap");
+  ul.innerHTML = "";
+  wrap.hidden = !list.length;
+  list.forEach(f => {
+    const li = mk("li", "client-card");
+    const top = mk("div", "client-top");
+    const logo = mk("div", "client-logo");
+    const initial = () => { logo.textContent = (f.name || "?").charAt(0).toUpperCase(); };
+    const logoSrc = clientLogos[(f.name || "").trim().toLowerCase()];
+    if(logoSrc){
+      const img = mk("img"); img.src = logoSrc; img.alt = f.name + " logo"; img.loading = "lazy";
+      img.onerror = () => { img.remove(); initial(); };
+      logo.appendChild(img);
+    } else initial();
+    top.appendChild(logo);
+    const who = mk("div");
+    who.appendChild(mk("h3", "", f.name));
+    const sub = [f.person, f.type].filter(Boolean).join(" \u00B7 ");
+    if(sub) who.appendChild(mk("span", "where", sub));
+    top.appendChild(who);
+    li.appendChild(top);
+    li.appendChild(mk("div", "fb-stars", stars(f.rating)));
+    li.appendChild(mk("blockquote", "", "\u201C" + f.message + "\u201D"));
+    ul.appendChild(li);
+  });
+}
+
+document.getElementById("fbForm").addEventListener("submit", async e => {
+  e.preventDefault();
+  const msg = document.getElementById("fbMsg"), btn = document.getElementById("fbBtn");
+  const v = id => document.getElementById(id).value.trim();
+  if(document.getElementById("fbWebsite").value) return;   // spam trap: real people leave this empty
+  const name = v("fbCompany"), person = v("fbPerson"), type = v("fbType"), message = v("fbText");
+  const rating = Number(document.getElementById("fbRating").value);
+  msg.className = "error";
+  if(!name || !person || !message){ msg.textContent = "Please fill in the company name, your name and your feedback."; return; }
+  if(!db){ msg.textContent = "Feedback cannot be sent right now. Please try again later."; return; }
+  btn.disabled = true; msg.textContent = "";
+  try{
+    await db.collection("feedback").add({
+      name, person, type, rating, message, status:"pending",
+      createdAt: firebase.firestore.FieldValue.serverTimestamp()
+    });
+    document.getElementById("fbForm").reset();
+    msg.className = "fb-ok";
+    msg.textContent = "Thank you! Your feedback was sent and will appear after Crest Veggies approves it.";
+  }catch(err){
+    msg.textContent = err && !err.code ? err.message : "Sorry, your feedback could not be sent. Please try again." + (err && err.code ? " (" + err.code + ")" : "");
+  }
+  btn.disabled = false;
+});
+
+try{
+  const c = window.FIREBASE_CONFIG;
+  if(window.firebase && c && !String(c.apiKey).startsWith("PASTE")){
+    firebase.initializeApp(c);
+    db = firebase.firestore();
+    db.collection("products").orderBy("order").onSnapshot(snap => {
+      liveProducts = snap.docs.map(d => Object.assign({id:d.id}, d.data()))
+        .filter(p => p.name && Number.isFinite(Number(p.price)))
+        .map(p => Object.assign(p, {price:Number(p.price), inStock:p.inStock !== false}));
+      renderProducts();
+    }, () => {});
+    db.collection("settings").doc("products").onSnapshot(d => {
+      legacySettings = d.exists ? d.data() : {};
+      renderProducts();
+    }, () => {});
+    db.collection("feedback").where("status", "==", "approved").onSnapshot(snap => {
+      const t = d => d.createdAt && d.createdAt.toMillis ? d.createdAt.toMillis() : Date.now();
+      fbData = snap.docs.map(d => d.data()).filter(f => f.name && f.message).sort((a, b) => t(b) - t(a));
+      renderFeedback();
+    }, () => {});
+    db.collection("clients").orderBy("order").onSnapshot(snap => {
+      const clients = snap.docs.map(d => d.data()).filter(c => c.name);
+      clientLogos = {};
+      clients.forEach(c => { if(c.logo) clientLogos[c.name.trim().toLowerCase()] = c.logo; });
+      renderClients(clients);
+      renderFeedback();
+    }, () => {});
+  }
+}catch(e){ db = null; }
+
+document.getElementById("year").textContent = new Date().getFullYear();
+renderProducts();
+showPage(location.hash.slice(1) || "home");
+
+// Intro (about 5 seconds): photo pieces and the "Crest Veggies" letters fly in and merge, then the page opens
+(function(){
+  const body = document.body, intro = document.getElementById("intro"),
+        stage = document.getElementById("introStage"), title = document.getElementById("introTitle");
+  let done = false, anims = [];
+  function open(){
+    if(done) return; done = true;
+    anims.forEach(a => a.cancel());
+    body.classList.add("ready");
+    body.classList.remove("intro-on");
+    intro.style.display = "none";
+  }
+  // On a page refresh, skip the intro and stay on the page that is open
+  const nav = performance.getEntriesByType && performance.getEntriesByType("navigation")[0];
+  const isReload = nav ? nav.type === "reload" : (performance.navigation && performance.navigation.type === 1);
+  if(isReload || matchMedia("(prefers-reduced-motion: reduce)").matches || !stage.animate){ open(); return; }
+  intro.addEventListener("click", open);
+
+  const probe = new Image();
+  probe.onerror = open;
+  probe.onload = run;
+  probe.src = "coconut.jpg";
+
+  function run(){
+    window.scrollTo(0,0);
+    const N = 6, S = stage.getBoundingClientRect().width, ts = S / N;
+    const W = innerWidth, H = innerHeight, rnd = (a,b) => a + Math.random()*(b-a);
+    const add = (el, kf, opt) => { const a = el.animate(kf, opt); anims.push(a); return a; };
+
+    // Photo pieces: each flies in from a random spot and locks into place (0 - 2.8 s)
+    for(let r = 0; r < N; r++) for(let c = 0; c < N; c++){
+      const t = document.createElement("div");
+      t.className = "tile";
+      t.style.cssText = "left:"+(c*ts)+"px;top:"+(r*ts)+"px;width:"+(ts+1)+"px;height:"+(ts+1)+"px;" +
+        "background-size:"+S+"px "+S+"px;background-position:"+(-c*ts)+"px "+(-r*ts)+"px;";
+      const R = "24px";
+      if(r===0&&c===0) t.style.borderTopLeftRadius = R;
+      if(r===0&&c===N-1) t.style.borderTopRightRadius = R;
+      if(r===N-1&&c===0) t.style.borderBottomLeftRadius = R;
+      if(r===N-1&&c===N-1) t.style.borderBottomRightRadius = R;
+      stage.appendChild(t);
+      const x = rnd(-W*.7, W*.7), y = rnd(-H*.7, H*.7), rot = rnd(-200, 200);
+      add(t, [
+        {transform:"translate("+x+"px,"+y+"px) rotate("+rot+"deg) scale("+rnd(.2,.6)+")", opacity:0},
+        {opacity:1, offset:.25},
+        {transform:"translate(0,0) rotate(0deg) scale(1)", opacity:1}
+      ], {duration:900, delay:rnd(100,1900), easing:"cubic-bezier(.2,.8,.2,1)", fill:"both"});
+    }
+
+    // Title letters: fly in and join under the photo (1.8 - 3.4 s)
+    title.style.top = (stage.getBoundingClientRect().bottom + 26) + "px";
+    "Crest Veggies".split("").forEach((ch, i) => {
+      const sp = document.createElement("span");
+      sp.textContent = ch === " " ? "\u00A0" : ch;
+      if(i >= 6) sp.className = "v";
+      title.appendChild(sp);
+      add(sp, [
+        {transform:"translate("+rnd(-W*.6,W*.6)+"px,"+rnd(-H*.6,H*.6)+"px) rotate("+rnd(-180,180)+"deg) scale(.3)", opacity:0},
+        {opacity:1, offset:.3},
+        {transform:"translate(0,0) rotate(0deg) scale(1)", opacity:1}
+      ], {duration:600, delay:1800 + i*80 + rnd(0,100), easing:"cubic-bezier(.2,.8,.2,1)", fill:"both"});
+    });
+
+    // Brief hold, then the merged photo flies to the home page picture and the title fades (3.5 - 4.6 s)
+    add(title, [{opacity:1},{opacity:0}], {duration:400, delay:3500, fill:"forwards"});
+    const hero = document.querySelector(".hero-art").getBoundingClientRect();
+    const sr = stage.getBoundingClientRect();
+    const dx = hero.left + hero.width/2 - (sr.left + sr.width/2);
+    const dy = hero.top + hero.height/2 - (sr.top + sr.height/2);
+    const fly = add(stage, [
+      {transform:"translate(-50%,-50%)"},
+      {transform:"translate(-50%,-50%) translate("+dx+"px,"+dy+"px) scale("+(hero.width/S)+")"}
+    ], {duration:1000, delay:3600, easing:"cubic-bezier(.5,0,.2,1)", fill:"forwards"});
+
+    // Page opens at about 5 s
+    fly.onfinish = () => {
+      const f = intro.animate([{opacity:1},{opacity:0}], {duration:400, fill:"forwards"});
+      body.classList.add("ready");
+      f.onfinish = open;
+    };
+  }
+})();
+</script>
+</body>
+</html>
